@@ -24,10 +24,9 @@ public class HomePageComponent extends BaseComponent {
     }
 
     public void openQuestion() {
-        (new WebDriverWait(this.driver, 3)).until(ExpectedConditions.elementToBeClickable(this.question));
-        WebElement questionELement = this.root.findElement(this.question);
-        this.root.findElement(this.question);
-        ((JavascriptExecutor)this.driver).executeScript("arguments[0].scrollIntoView();", questionELement);
-        questionELement.click();
+        WebElement questionElement = this.root.findElement(this.question);
+        ((JavascriptExecutor)this.driver).executeScript("arguments[0].scrollIntoView();", questionElement);
+        new WebDriverWait(this.driver, 3).until(ExpectedConditions.elementToBeClickable(this.question));
+        questionElement.click();
     }
 }
