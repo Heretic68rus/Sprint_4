@@ -13,32 +13,27 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-@RunWith(Parameterized.class)
+
 public class OrderRentTest {
-    @Parameter
-    public String browserType;
+
     private WebDriver driver;
 
-    public OrderRentTest() {
-    }
 
-    @Parameters
-    public static Object[][] browser() {
-        return new Object[][]{{"chrome"}, {"firefox"}};
-    }
 
     @Before
     public void setup() {
-        if (this.browserType.equals("chrome")) {
-            WebDriverManager.chromedriver().setup();
-            System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-            this.driver = new ChromeDriver();
-        } else if (this.browserType.equals("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
-            this.driver = new FirefoxDriver();
+        switch (System.getProperty("browser")) {
+            case "firefox":
+                WebDriverManager.chromedriver().setup();
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+                this.driver = new ChromeDriver();// инициализация firefox
+                break;
+            case "chrome":
+            default:
+                WebDriverManager.firefoxdriver().setup();
+                System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
+                this.driver = new FirefoxDriver();
         }
-
     }
 
     @Test
@@ -63,7 +58,6 @@ public class OrderRentTest {
         aboutRentPageObject.clickYesOrderButtonAboutRentPage();
         aboutRentPageObject.waitForLoadHeaderOrderPlaced();
     }
-
     @Test
     public void testDownButton() {
         this.driver.get("https://qa-scooter.praktikum-services.ru/");
@@ -86,7 +80,6 @@ public class OrderRentTest {
         aboutRentPageObject.clickYesOrderButtonAboutRentPage();
         aboutRentPageObject.waitForLoadHeaderOrderPlaced();
     }
-
     @After
     public void teardown() {
         this.driver.quit();
