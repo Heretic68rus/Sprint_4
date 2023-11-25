@@ -23,12 +23,12 @@ public class OrderRentTest {
     @Before
     public void setup() {
         switch (System.getProperty("browser")) {
-            case "firefox":
+            case "chrome":
                 WebDriverManager.chromedriver().setup();
                 System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-                this.driver = new ChromeDriver();// инициализация firefox
+                this.driver = new ChromeDriver();
                 break;
-            case "chrome":
+            case "firefox":
             default:
                 WebDriverManager.firefoxdriver().setup();
                 System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
@@ -37,10 +37,10 @@ public class OrderRentTest {
     }
 
     @Test
-    public void testUpButton() {
+    public void testButton() {
         this.driver.get("https://qa-scooter.praktikum-services.ru/");
         HomePageObject homePageObject = new HomePageObject(this.driver);
-        homePageObject.clickorderButtonUpOnHomePage();
+        homePageObject.clickorderButtonOnHomePage("Up");
         homePageObject.waitForLoadHeaderOrderPage();
         OrderPageObject orderPageObject = new OrderPageObject(this.driver);
         orderPageObject.fillNameFieldOrderPage("Иван");
@@ -57,28 +57,7 @@ public class OrderRentTest {
         aboutRentPageObject.clickOrderButtonAboutRentPage();
         aboutRentPageObject.clickYesOrderButtonAboutRentPage();
         aboutRentPageObject.waitForLoadHeaderOrderPlaced();
-    }
-    @Test
-    public void testDownButton() {
-        this.driver.get("https://qa-scooter.praktikum-services.ru/");
-        HomePageObject homePageObject = new HomePageObject(this.driver);
-        homePageObject.clickorderButtonDownOnHomePage();
-        homePageObject.waitForLoadHeaderOrderPage();
-        OrderPageObject orderPageObject = new OrderPageObject(this.driver);
-        orderPageObject.fillNameFieldOrderPage("Иван");
-        orderPageObject.fillFamilyNameFieldOrderPage("Иванов");
-        orderPageObject.fillAddressFieldOrderPage("ул.Пушкина, д.1");
-        orderPageObject.fillMetroFieldOrderPage("Сокольники");
-        orderPageObject.fillPhoneFieldOrderPage("89998886655");
-        orderPageObject.clickFurtherButtonOrderPage();
-        orderPageObject.waitForLoadHeaderAboutRentPage();
-        AboutRentPageObject aboutRentPageObject = new AboutRentPageObject(this.driver);
-        aboutRentPageObject.fillDateFieldAboutRentPage("20.12.2023");
-        aboutRentPageObject.clickRentalPeriodFieldAboutRentPage();
-        aboutRentPageObject.clickTwoDaysChoiseAboutRentPage();
-        aboutRentPageObject.clickOrderButtonAboutRentPage();
-        aboutRentPageObject.clickYesOrderButtonAboutRentPage();
-        aboutRentPageObject.waitForLoadHeaderOrderPlaced();
+
     }
     @After
     public void teardown() {

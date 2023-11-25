@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Objects;
+
 public class HomePageObject {
     private WebDriver driver;
     private By orderButtonUpOnHomePage = By.xpath(".//div[@class='Header_Nav__AGCXC']/button[text()='Заказать']");//локатор кнопки Заказать в верхней части главной страницы
@@ -19,7 +21,14 @@ public class HomePageObject {
     public HomePageObject(WebDriver driver) {
         this.driver = driver;
     }
+    public void clickorderButtonOnHomePage(String buttonLocation) {
+        if (Objects.equals(buttonLocation, "Up")) {
+            clickorderButtonUpOnHomePage();
+        } if (Objects.equals(buttonLocation, "Down")){
+            clickorderButtonDownOnHomePage();
+        }
 
+    }
     public void clickorderButtonUpOnHomePage() {
         this.driver.findElement(this.orderButtonUpOnHomePage).click();
     }
