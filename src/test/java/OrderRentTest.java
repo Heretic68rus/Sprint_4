@@ -5,17 +5,25 @@ import org.example.OrderPageObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-
+@RunWith(Parameterized.class)
 public class OrderRentTest {
 
     private WebDriver driver;
+    @Parameter
+    public String buttonLocation;
 
-
-
+    @Parameters
+    public static Object[][] data() {
+        return new Object[][]{{"Up"}, {"Down"}};
+    }
     @Before
     public void setup() {
         switch (System.getProperty("browser")) {
@@ -36,7 +44,7 @@ public class OrderRentTest {
     public void testButton() {
         this.driver.get("https://qa-scooter.praktikum-services.ru/");
         HomePageObject homePageObject = new HomePageObject(this.driver);
-        homePageObject.clickorderButtonOnHomePage("Up");
+        homePageObject.clickorderButtonOnHomePage(buttonLocation);
         homePageObject.waitForLoadHeaderOrderPage();
         OrderPageObject orderPageObject = new OrderPageObject(this.driver);
         orderPageObject.fillNameFieldOrderPage("Иван");
